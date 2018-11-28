@@ -9,3 +9,8 @@ The purpsoe of this README.md file is to be a resourse for homework and assignme
     Respond to post 
     To get credit, comments need to be substantive
     Live session attendance is recorded automatically.
+
+Assignments Below
+1. Sources / Contact info - https://github.com/cherishashby/SMU-MSDS-Homework (ashbycherish@gmail.com) 
+2. README.
+3. Data "Fivethirty eight" & "Titanic" - credit 
