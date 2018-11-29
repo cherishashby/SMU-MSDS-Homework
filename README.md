@@ -13,4 +13,5 @@ The purpsoe of this README.md file is to be a resourse for homework and assignme
 Assignments Below
 1. Sources / Contact info - https://github.com/cherishashby/SMU-MSDS-Homework (ashbycherish@gmail.com) 
 2. README.
-3. Data "Fivethirty eight" & "Titanic" - credit 
+3. Data "Fivethirty eight" & "Titanic 
+4. Sources https://github.com/rudeboybert/fivethirtyeight & https://github.com/awesomedata/awesome-public-datasets
