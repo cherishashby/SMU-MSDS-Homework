@@ -1,0 +1,185 @@
+#**Assignment 5 Data Wrangling**  
+#####*By Cherish Ashby*   
+  
+###**Question 1**   
+  
+**A. First, import the .txt file into R so you can process it.  Keep in mind this is not a CSV file.  You might have to open the file to see what you’re dealing with.  Assign the resulting data frame to an object, df, that consists of three columns with humanreadable column names for each. ** 
+   
+Import document       
+```r{}
+yob2016 <- read.csv("~/SMUDataScience/msds6306/Lesson5/Assignment/yob2016.txt", header=FALSE, sep=";")
+```
+     
+Update names           
+```r{}
+names(yob2016) = c("First Name", "Gender", "Amount Of Children")
+names(yob2016)
+```
+
+Changed yob2016 to PopularChildrensNames2016
+```r{}
+PopularChildrensNames2016 = data.frame(yob2016)
+PopularChildrensNames2016
+```
+   
+**B. Display the summary & structure of df** 
+
+Summary
+```r{}
+summary(PopularChildrensNames2016)
+```
+
+Output Summary 
+```r{}     
+   First.Name    Gender    Amount.Of.Children     
+ Aalijah:    2   F:18758   Min.   :    5.0   
+ Aaliyan:    2   M:14111   1st Qu.:    7.0   
+ Aamari :    2             Median :   12.0   
+ Aarian :    2             Mean   :  110.7   
+ Aarin  :    2             3rd Qu.:   30.0   
+ Aaris  :    2             Max.   :19414.0   
+ (Other):32857         
+```
+         
+Structure              
+```r{}
+str(PopularChildrensNames2016)
+```
+  
+Output Structure    
+```r{}      
+data.frame:	32869 obs. of  3 variables:          
+First.Name: Factor w/ 30295 levels "Aaban","Aabha",..: 9317 22546 3770 26409 12019 20596 6185 339 9298 11222...
+Gender: Factor w/ 2 levels "F","M": 1 1 1 1 1 1 1 1 1 1...
+Amount.Of.Children: int  19414 19246 16237 16070 14722 14366 13030 11699 10926 10733...                        
+```
+    
+**C.  Your client tells you that there is a problem with the raw file.  One name was entered twice and misspelled.  The client cannot remember which name it is; there are thousands he saw! But he did mention he accidentally put three y’s at the end of the name.  Write an R command to figure out which name it is and display it.  ** 
+
+```r{}
+grep("yyy", PopularChildrensNames2016$First.Name)
+[1] 212
+```
+```r{}    
+PopularChildrensNames2016$First.Name[212]
+[1] Fionayyy
+``` 
+   
+**D.  Upon finding the misspelled name, please remove this particular observation, as the client says it’s redundant.  Save the remaining dataset as an object: y2016  **    
+   
+Remove mispelled name "Fionayy"
+```r{}
+y2016<-PopularChildrensNames2016[-c(212), ]
+```
+     
+###**Question 2** 
+
+**A. Like 1a, please import the .txt file into R.  Look at the file before you do.  You might have to change some options to import it properly.  Again, please give the dataframe human-readable column names.  Assign the dataframe to y2015.**    
+  
+```r{}
+yob2015 <- read.csv("~/SMUDataScience/msds6306/Lesson5/Assignment/yob2015.txt", header=FALSE)
+y2015 <- yob2015
+``` 
+   
+```r{}
+names(y2015) = c("First Name", "Gender", "Amount Of Children")
+```
+   
+**B. Display the last ten rows in the dataframe.  Describe something you find interesting about these 10 rows. .**    
+
+*The information below showcases that the last 10 rows in the dataframe include the first names start with a Z, gender for all z names are males and the total amount of children is 5.* 
+
+   
+```r{}
+Last10y2015 <- y2015[33053:33063, ]
+```
+   
+```r{}
+      First Name Gender Amount Of Children
+33053       Ziyi      M                  5
+33054       Ziyu      M                  5
+33055       Zoel      M                  5
+33056      Zohar      M                  5
+33057     Zolton      M                  5
+33058       Zyah      M                  5
+33059     Zykell      M                  5
+33060     Zyking      M                  5
+33061      Zykir      M                  5
+33062      Zyrus      M                  5
+33063       Zyus      M                  5
+```
+   
+**C.  Merge y2016 and y2015 by your Name column; assign it to final.  The client only cares about names that have data for both 2016 and 2015; there should be no NA values in either of your amount of children rows after mergin .**    
+
+Merge data       
+```r{}
+MergeData2 <- merge(y2015, y2016, union("First.Name"), all=TRUE)
+``` 
+
+###**Question 3** 
+
+
+
+**a. Create a new column called “Total” in final that adds the amount of children in 2015 and 2016 together.  In those two years combined, how many people were given popular names?**
+
+```r{}
+cbind(y2015, y2016)
+```
+Totals    
+```r{}   
+summary(Final)
+   First.Name    Gender    Amount Of Children
+ Aalijah:    4   F:37811   Min.   :    5     
+ Aamari :    4   M:28120   1st Qu.:    7     
+ Aarian :    4             Median :   11     
+ Aaron  :    4             Mean   :  111     
+ Aarya  :    4             3rd Qu.:   30     
+ Aaryn  :    4             Max.   :20415     
+ (Other):65907                
+```
+**b. Sort the data by Total.  What are the top 10 most popular names?**
+  
+```r{}    
+Final[rev(order(Final$`Amount Of Children`)),]
+```
+   
+```r{}
+            First.Name Gender Amount Of Children
+1                 Emma      F              20415
+2               Olivia      F              19638
+19055             Noah      M              19594
+110000            Emma      F              19414
+210000          Olivia      F              19246
+187591            Noah      M              19015
+19056             Liam      M              18330
+187601            Liam      M              18138
+3               Sophia      F              17381
+19057            Mason      M              16591
+```
+**c. The client is expecting a girl!  Omit boys and give the top 10 most popular girl’s names.**
+
+```r{}
+FinalFemalesTop10Names <- Final[c("1", "2", "110000", "210000", "3", "4", "33064", "41000", "5", "6"),]
+```
+    
+**d. Write these top 10 girl names and their Totals to a CSV file.  Leave out the other columns entirely.**
+   
+```r{}  
+       First.Name Gender Amount Of Children
+1            Emma      F              20415
+2          Olivia      F              19638
+110000       Emma      F              19414
+210000     Olivia      F              19246
+3          Sophia      F              17381
+4             Ava      F              16340
+33064         Ava      F              16237
+41000      Sophia      F              16070
+5        Isabella      F              15574
+6             Mia      F              14871
+``` 
+	
+###**Question 4** 
+
+**Push at minimum your RMarkdown for this homework assignment and a Codebook to one of your GitHub repositories (you might place this in a Homework repo like last week).  The Codebook should contain a short definition of each object you create, and if creating multiple files, which file it is contained in.  You are welcome and encouraged to add other files—just make sure you have a description and directions that are helpful for the grader.** 
+   
+http://rpubs.com/cherishashby

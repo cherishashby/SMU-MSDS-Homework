@@ -1,0 +1,9 @@
+Codebook - Popular Names 
+Combined data from y2015 & y2016
+Variables = Names , Gender, Total Number of Children
+Object = Final ( Ranking from largest amount of children to least)
+Object = Top10FemaleNames ( Names, Female Gender Only, Total Number of Children)
+
+RMardown File Attached & URL Link to Rpubs 
+
+http://rpubs.com/cherishashby
